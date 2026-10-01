@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DropShop</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛍️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link rel="stylesheet" href="/style.css">
+<script>
+// تطبيق ألوان المستخدم المحفوظة قبل ظهور الصفحة لتجنب الوميض
+try{var t=JSON.parse(localStorage.getItem('ds_theme')||'{}'),r=document.documentElement;
+if(t.accent)r.style.setProperty('--pri',t.accent);if(t.accent2)r.style.setProperty('--pri2',t.accent2);
+var m=t.mode||'auto',tw=window.Telegram&&Telegram.WebApp&&Telegram.WebApp.initData?Telegram.WebApp:null;
+r.dataset.theme=m!=='auto'?m:(tw?tw.colorScheme:(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));
+r.dataset.bg=t.bg||'navy';}catch(e){}
+</script>
+</head>
+<body>
+<div id="busy"></div>
+<div class="wrap" id="app"><div class="boot"><div class="logo">🛍️</div><div class="mut">جارٍ التحميل…</div></div></div>
+<div id="modal"></div>
+<div id="toast" aria-live="polite"></div>
+<script src="/app.js"></script>
+</body>
+</html>
