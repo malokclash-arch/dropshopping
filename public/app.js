@@ -149,7 +149,7 @@ function areaChart(vals, labels, color) {
   const pts = vals.map((v, i) => [p + i * (Wd - 2 * p) / (vals.length - 1), H - 26 - (v / max) * (H - 44)]);
   const line = pts.map((q, i) => (i ? 'L' : 'M') + q[0].toFixed(1) + ' ' + q[1].toFixed(1)).join(' ');
   return `<svg viewBox="0 0 ${Wd} ${H}" class="chart" role="img"><defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:${color};stop-opacity:.4"/><stop offset="1" style="stop-color:${color};stop-opacity:0"/></linearGradient></defs>
-  <path d="${line} L${pts.at(-1)[0]} ${H - 26} L${pts[0][0]} ${H - 26} Z" fill="url(#${id})"/><path d="${line}" fill="none" style="stroke:${color}" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="${line} L${pts[pts.length - 1][0]} ${H - 26} L${pts[0][0]} ${H - 26} Z" fill="url(#${id})"/><path d="${line}" fill="none" style="stroke:${color}" stroke-width="2.5" stroke-linejoin="round"/>
   ${pts.map(q => `<circle cx="${q[0]}" cy="${q[1]}" r="3" style="fill:${color}"/>`).join('')}
   ${labels.map((t, i) => `<text x="${pts[i][0]}" y="${H - 6}" text-anchor="middle" font-size="10" style="fill:var(--muted)">${t}</text>`).join('')}</svg>`;
 }
@@ -159,7 +159,7 @@ function donut(parts) {
 }
 
 /* ---------- عناصر مشتركة ---------- */
-function head(title, sub, letter) {
+function topBar(title, sub, letter) {
   const n = (S.notifs || []).filter(x => !x.read).length;
   return `<div class="top"><div class="row"><div class="av">${esc(letter)}</div><div><div class="mut">${sub}</div><div class="h1">${esc(title)}</div></div></div><button class="ibtn" onclick="openNotifs()" aria-label="الإشعارات">${ic('bell')}${n ? `<span class="dotn">${n}</span>` : ''}</button></div>`;
 }
@@ -234,7 +234,7 @@ const resolveProblem = (code, reply) => run(api(`/api/orders/${encodeURIComponen
    ========================================================= */
 function merchantView() {
   const m = curM();
-  let h = head(m.name, 'مرحباً،', (m.name || '?')[0].toUpperCase());
+  let h = topBar(m.name, 'مرحباً،', (m.name || '?')[0].toUpperCase());
   if (UI.order) { const o = byId(UI.order); if (o) return h + orderDetail(o, 'merchant') + mNav(); }
   h += ({ home: mHome, orders: mOrders, new: mNew, stats: mStats, account: mAccount }[UI.tab] || mHome)();
   return h + mNav();
@@ -445,7 +445,7 @@ function mAccount() {
    واجهة الإدارة
    ========================================================= */
 function adminView() {
-  let h = head('لوحة الإدارة', 'DropShop', (S.me.name || 'A')[0].toUpperCase());
+  let h = topBar('لوحة الإدارة', 'DropShop', (S.me.name || 'A')[0].toUpperCase());
   if (UI.order) { const o = byId(UI.order); if (o) return h + orderDetail(o, 'admin') + aNav(); }
   if (UI.tab === 'home') UI.tab = 'dash';
   h += ({ dash: aDash, orders: aOrders, stock: aStock, merchants: aMerchants, finance: aFinance, settings: aSettings }[UI.tab] || aDash)();
